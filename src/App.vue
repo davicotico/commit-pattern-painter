@@ -1,28 +1,9 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 import BrushPalette from './components/BrushPalette.vue';
-import ColumnPixel from './components/ColumnPixel.vue';
+import CommitsCanva from './components/CommitsCanva.vue';
 
 const modelBrush = ref({ id: 0, color: '#eee' });
-const isMouseDown = ref(false);
-
-onMounted(() => {
-  document.addEventListener('mousedown', handleGlobalMouseDown);
-  document.addEventListener('mouseup', handleGlobalMouseUp);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('mousedown', handleGlobalMouseDown);
-  document.removeEventListener('mouseup', handleGlobalMouseUp);
-});
-
-function handleGlobalMouseDown() {
-  isMouseDown.value = true;
-}
-
-function handleGlobalMouseUp() {
-  isMouseDown.value = false;
-}
 
 function handlePixelPainted() {
   updateOutput();
@@ -58,17 +39,7 @@ function updateOutput2(data) {
     </div>
     <div class="row">
       <div class="col">
-        <div id="square-canva" class="commits-canva">
-          <ul>
-            <li v-for="i in 45" :key="i">
-              <column-pixel
-                :model-brush="modelBrush"
-                :is-mouse-down="isMouseDown"
-                @painted="handlePixelPainted()"
-              />
-            </li>
-          </ul>
-        </div>
+        <commits-canva :brush="modelBrush" @painted="handlePixelPainted()" />
       </div>
     </div>
     <div class="row">
