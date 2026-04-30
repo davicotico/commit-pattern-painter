@@ -30,11 +30,7 @@ function handleGlobalMouseUp() {
   <div id="square-canva" class="commits-canva">
     <ul>
       <li v-for="i in 45" :key="i">
-        <column-pixel
-          :model-brush="brush"
-          :is-mouse-down="isMouseDown"
-          @painted="$emit('painted')"
-        />
+        <column-pixel :brush="brush" :is-mouse-down="isMouseDown" @painted="$emit('painted')" />
       </li>
     </ul>
   </div>

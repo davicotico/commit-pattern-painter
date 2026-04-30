@@ -1,13 +1,8 @@
 <script setup>
+import { greenLight } from '@/data/palettes';
 import { ref } from 'vue';
 
-const palette = ref([
-  { id: 0, color: '#eee' },
-  { id: 1, color: '#d6e685' },
-  { id: 2, color: '#8cc665' },
-  { id: 3, color: '#44a340' },
-  { id: 4, color: '#1e6823' },
-]);
+const palette = ref(greenLight);
 
 const brush = defineModel();
 </script>

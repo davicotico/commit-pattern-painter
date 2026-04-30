@@ -1,7 +1,7 @@
 <script setup>
 import ThePixel from './ThePixel.vue';
 defineProps({
-  modelBrush: Object,
+  brush: Object,
   isMouseDown: Boolean,
 });
 defineEmits(['painted']);
@@ -11,7 +11,7 @@ defineEmits(['painted']);
     <the-pixel
       v-for="i in 7"
       :key="i"
-      :model-brush="modelBrush"
+      :brush="brush"
       :is-mouse-down="isMouseDown"
       @painted="$emit('painted')"
     ></the-pixel>

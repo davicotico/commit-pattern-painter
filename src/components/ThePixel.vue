@@ -1,10 +1,10 @@
 <script setup>
-import { useTemplateRef } from 'vue';
+import { onMounted, useTemplateRef } from 'vue';
 
 const pixelRef = useTemplateRef('pixelRef');
 
 const props = defineProps({
-  modelBrush: Object,
+  brush: Object,
   isMouseDown: Boolean,
 });
 
@@ -21,12 +21,17 @@ function handleMouseOver() {
 }
 
 function paintPixel() {
-  if (pixelRef.value && props.modelBrush) {
-    pixelRef.value.style.backgroundColor = props.modelBrush.color;
-    pixelRef.value.dataset.brush = props.modelBrush.id;
+  if (pixelRef.value && props.brush) {
+    pixelRef.value.style.backgroundColor = props.brush.color;
+    pixelRef.value.dataset.brush = props.brush.id;
     emit('painted');
   }
 }
+onMounted(() => {
+  /* let valor = { id: 4, color: '#1e6823' };
+  pixelRef.value.style.backgroundColor = valor.color;
+  pixelRef.value.dataset.brush = valor.id; */
+});
 </script>
 <template>
   <li ref="pixelRef" class="pixel" @mousedown="handleMouseDown" @mouseover="handleMouseOver"></li>

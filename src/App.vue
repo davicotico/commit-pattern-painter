@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import BrushPalette from './components/BrushPalette.vue';
 import CommitsCanva from './components/CommitsCanva.vue';
 
-const modelBrush = ref({ id: 0, color: '#eee' });
+const selectedBrush = ref({ id: 0, color: '#eee' });
 
 function handlePixelPainted() {
   updateOutput();
@@ -34,12 +34,12 @@ function updateOutput2(data) {
   <div class="container">
     <div class="row my-2">
       <div class="col">
-        <brush-palette v-model="modelBrush" />
+        <brush-palette v-model="selectedBrush" />
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <commits-canva :brush="modelBrush" @painted="handlePixelPainted()" />
+        <commits-canva :brush="selectedBrush" @painted="handlePixelPainted()" />
       </div>
     </div>
     <div class="row">
