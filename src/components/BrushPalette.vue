@@ -1,9 +1,16 @@
 <script setup>
-import { greenLight } from '@/data/palettes';
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { greenLight, greenDark } from '@/data/palettes';
+import { useDark } from '@vueuse/core';
 
-const palette = ref(greenLight);
+const isDark = useDark({
+  selector: 'html',
+  attribute: 'data-bs-theme',
+  valueDark: 'dark',
+  valueLight: 'light',
+});
 
+const palette = computed(() => (isDark.value ? greenDark : greenLight));
 const brush = defineModel();
 </script>
 <template>

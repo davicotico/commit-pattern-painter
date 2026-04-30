@@ -1,8 +1,15 @@
 <script setup>
 import { ref } from 'vue';
+import { useDark } from '@vueuse/core';
 import BrushPalette from './components/BrushPalette.vue';
 import CommitsCanva from './components/CommitsCanva.vue';
 
+const isDark = useDark({
+  selector: 'html',
+  attribute: 'data-bs-theme',
+  valueDark: 'dark',
+  valueLight: 'light',
+});
 const selectedBrush = ref({ id: 0, color: '#eee' });
 
 function handlePixelPainted() {
@@ -31,7 +38,23 @@ function updateOutput2(data) {
 }
 </script>
 <template>
-  <div class="container">
+  <nav class="navbar navbar-expand-lg sticky-top border-bottom" :class="{ isDark: 'navbar-dark' }">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <strong>Commit Pattern Painter</strong>
+      </a>
+      <div class="ms-auto">
+        <button
+          class="btn btn-outline-secondary"
+          @click="isDark = !isDark"
+          :title="isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+        >
+          {{ isDark ? 'Claro' : 'Oscuro' }}
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-4">
     <div class="row my-2">
       <div class="col">
         <brush-palette v-model="selectedBrush" />
