@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, provide } from 'vue';
 import ColumnPixel from './ColumnPixel.vue';
 import { useDark } from '@vueuse/core';
 
@@ -9,6 +9,8 @@ const isDark = useDark({
   valueDark: 'dark',
   valueLight: 'light',
 });
+
+provide('isDark', isDark);
 
 defineEmits(['painted']);
 defineProps({

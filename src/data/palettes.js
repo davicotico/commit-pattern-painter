@@ -7,11 +7,22 @@ const greenLight = [
 ];
 
 const greenDark = [
-  { id: 0, color: '#0d1117' }, // Casi negro (fondo oscuro)
-  { id: 1, color: '#0e4429' }, // Verde muy oscuro
-  { id: 2, color: '#26a641' }, // Verde medio
-  { id: 3, color: '#39d353' }, // Verde claro
-  { id: 4, color: '#56d364' }, // Verde muy claro
+  { id: 0, color: '#0d1117' },
+  { id: 1, color: '#0e4429' },
+  { id: 2, color: '#26a641' },
+  { id: 3, color: '#39d353' },
+  { id: 4, color: '#56d364' },
 ];
 
-export { greenLight, greenDark };
+const allColors = {
+  dark: greenDark,
+  light: greenLight,
+};
+
+const indexedColors = Object.fromEntries(
+  Object.entries(allColors).map(([modo, arrColors]) => [
+    modo,
+    Object.fromEntries(arrColors.map((item) => [item.id, item.color])),
+  ]),
+);
+export { greenLight, greenDark, indexedColors };

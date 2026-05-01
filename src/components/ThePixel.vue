@@ -1,14 +1,30 @@
 <script setup>
+import { inject, watch } from 'vue';
 import { onMounted, useTemplateRef } from 'vue';
+import { indexedColors } from '@/data/palettes';
 
+const isDark = inject('isDark');
 const pixelRef = useTemplateRef('pixelRef');
 
+const emit = defineEmits(['painted']);
 const props = defineProps({
   brush: Object,
   isMouseDown: Boolean,
 });
 
-const emit = defineEmits(['painted']);
+watch(isDark, () => {
+  const colorId = getColorId();
+  if (isDark.value) {
+    pixelRef.value.style.backgroundColor = indexedColors['dark'][colorId];
+  } else {
+    pixelRef.value.style.backgroundColor = indexedColors['light'][colorId];
+  }
+});
+
+function getColorId() {
+  let id = parseInt(pixelRef.value.dataset.brush || '0');
+  return id;
+}
 
 function handleMouseDown() {
   paintPixel();
