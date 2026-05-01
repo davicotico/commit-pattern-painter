@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useDark } from '@vueuse/core';
 import BrushPalette from './components/BrushPalette.vue';
 import CommitsCanva from './components/CommitsCanva.vue';
+import { updateOutput1, updateOutput2 } from './utils/output';
 
 const isDark = useDark({
   selector: 'html',
@@ -10,7 +11,7 @@ const isDark = useDark({
   valueDark: 'dark',
   valueLight: 'light',
 });
-const selectedBrush = ref({ id: 0, color: '#eee' });
+const selectedBrushId = ref(0);
 
 function handlePixelPainted() {
   updateOutput();
@@ -28,13 +29,6 @@ function updateOutput() {
   });
   updateOutput1(data);
   updateOutput2(data);
-}
-function updateOutput1(data) {
-  document.getElementById('output1').value =
-    '[[' + data.map((row) => row.join()).join('],\n[') + ']]';
-}
-function updateOutput2(data) {
-  document.getElementById('output2').value = data.map((row) => row.join('')).join('\n');
 }
 </script>
 <template>
@@ -57,12 +51,12 @@ function updateOutput2(data) {
   <div class="container mt-4">
     <div class="row my-2">
       <div class="col">
-        <brush-palette v-model="selectedBrush" />
+        <brush-palette v-model="selectedBrushId" />
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <commits-canva :brush="selectedBrush" @painted="handlePixelPainted()" />
+        <commits-canva :brush-id="selectedBrushId" @painted="handlePixelPainted()" />
       </div>
     </div>
     <div class="row">

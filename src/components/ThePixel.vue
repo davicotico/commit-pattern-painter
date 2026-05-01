@@ -14,16 +14,12 @@ const props = defineProps({
 
 watch(isDark, () => {
   const colorId = getColorId();
-  if (isDark.value) {
-    pixelRef.value.style.backgroundColor = indexedColors['dark'][colorId];
-  } else {
-    pixelRef.value.style.backgroundColor = indexedColors['light'][colorId];
-  }
+  let mode = isDark.value ? 'dark' : 'light';
+  pixelRef.value.style.backgroundColor = indexedColors[mode][colorId];
 });
 
 function getColorId() {
-  let id = parseInt(pixelRef.value.dataset.brush || '0');
-  return id;
+  return parseInt(pixelRef.value.dataset.brush || '0');
 }
 
 function handleMouseDown() {

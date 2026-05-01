@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted, onUnmounted, provide } from 'vue';
+import { ref, onMounted, onUnmounted, provide, watchEffect } from 'vue';
 import ColumnPixel from './ColumnPixel.vue';
 import { useDark } from '@vueuse/core';
+import { indexedColors } from '@/data/palettes';
 
 const isDark = useDark({
   selector: 'html',
@@ -13,12 +14,18 @@ const isDark = useDark({
 provide('isDark', isDark);
 
 defineEmits(['painted']);
-defineProps({
-  brush: Object,
+const props = defineProps({
+  brushId: Number,
 });
 const isMouseDown = ref(false);
+const brush = ref();
+
+watchEffect(() => {
+  brush.value = getBrush();
+});
 
 onMounted(() => {
+  brush.value = getBrush();
   document.addEventListener('mousedown', handleGlobalMouseDown);
   document.addEventListener('mouseup', handleGlobalMouseUp);
 });
@@ -27,6 +34,14 @@ onUnmounted(() => {
   document.removeEventListener('mousedown', handleGlobalMouseDown);
   document.removeEventListener('mouseup', handleGlobalMouseUp);
 });
+
+function getBrush() {
+  const modo = isDark.value ? 'dark' : 'light';
+  return {
+    id: props.brushId,
+    color: indexedColors[modo][props.brushId],
+  };
+}
 
 function handleGlobalMouseDown() {
   isMouseDown.value = true;

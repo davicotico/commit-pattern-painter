@@ -11,14 +11,14 @@ const isDark = useDark({
 });
 
 const palette = computed(() => (isDark.value ? greenDark : greenLight));
-const brush = defineModel();
+const brushId = defineModel();
 </script>
 <template>
   <label class="radio-container mx-1" v-for="item in palette" :key="item.id">
     <input
       type="radio"
-      v-model="brush"
-      :value="item"
+      v-model="brushId"
+      :value="item.id"
       class="custom-radio"
       :style="{ backgroundColor: item.color }"
     />
