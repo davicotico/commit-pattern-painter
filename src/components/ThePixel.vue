@@ -11,6 +11,7 @@ const props = defineProps({
   brush: Object,
   isMouseDown: Boolean,
 });
+defineExpose({ pixelRef });
 
 watch(isDark, () => {
   const colorId = getColorId();
@@ -39,11 +40,7 @@ function paintPixel() {
     emit('painted');
   }
 }
-onMounted(() => {
-  /* let valor = { id: 4, color: '#1e6823' };
-  pixelRef.value.style.backgroundColor = valor.color;
-  pixelRef.value.dataset.brush = valor.id; */
-});
+onMounted(() => {});
 </script>
 <template>
   <li ref="pixelRef" class="pixel" @mousedown="handleMouseDown" @mouseover="handleMouseOver"></li>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, useTemplateRef } from 'vue';
 import { useDark } from '@vueuse/core';
 import BrushPalette from './components/BrushPalette.vue';
 import CommitsCanva from './components/CommitsCanva.vue';
@@ -31,6 +31,19 @@ function updateOutput() {
   });
   updateOutput1(data);
   updateOutput2(data);
+}
+
+const DATA = [
+  [1, 2, 3, 4, 0, 1, 2, 3, 4],
+  [1, 2, 3, 4, 0, 1, 2, 3, 4],
+  [1, 2, 3, 4, 0, 1, 2, 3, 4],
+  [1, 2, 3, 4, 0, 1, 2, 3, 4],
+];
+const input = ref(JSON.stringify(DATA));
+const commits = useTemplateRef('commits');
+function loadData() {
+  console.log(JSON.parse(input.value));
+  commits.value.loadData(JSON.parse(input.value));
 }
 </script>
 <template>
@@ -80,7 +93,20 @@ function updateOutput() {
     </div>
     <div class="row">
       <div class="col">
-        <commits-canva :brush-id="selectedBrushId" @painted="handlePixelPainted()" />
+        <div class="card my-2">
+          <div class="card-header">
+            <span> Input </span>
+            <button type="button" class="btn btn-primary" @click="loadData()">Load</button>
+          </div>
+          <div class="card-body p-1">
+            <textarea id="input" class="form-control w-100" v-model="input"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <commits-canva :brush-id="selectedBrushId" @painted="handlePixelPainted()" ref="commits" />
       </div>
     </div>
     <div class="row">
