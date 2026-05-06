@@ -62,11 +62,15 @@ function setPixelRef(key, component) {
 }
 
 function loadData(data) {
-  for (let i = 0; i < 2; i++) {
+  if (!data.length) {
+    console.error('data is not an array');
+    return;
+  }
+  for (let i = 0; i < 45; i++) {
     for (let j = 0; j < 7; j++) {
       const el = pixelElements[`${i}_${j}`];
       if (el) {
-        const br = getBrushById(data[i][j]);
+        const br = getBrushById(data[j][i]);
         el.style.backgroundColor = br.color;
         el.dataset.brush = br.id;
       }

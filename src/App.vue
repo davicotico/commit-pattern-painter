@@ -99,7 +99,7 @@ function loadData() {
             <button type="button" class="btn btn-primary" @click="loadData()">Load</button>
           </div>
           <div class="card-body p-1">
-            <textarea id="input" class="form-control w-100" v-model="input"></textarea>
+            <textarea class="form-control w-100" v-model="input"></textarea>
           </div>
         </div>
       </div>
