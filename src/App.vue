@@ -6,6 +6,7 @@ import CommitsCanva from './components/CommitsCanva.vue';
 import { updateOutput1, updateOutput2 } from './utils/output';
 import IconMoon from './components/icons/IconMoon.vue';
 import IconSun from './components/icons/IconSun.vue';
+import { HOLA_MUNDO } from './utils/constants';
 
 const isDark = useDark({
   selector: 'html',
@@ -13,7 +14,10 @@ const isDark = useDark({
   valueDark: 'dark',
   valueLight: 'light',
 });
+const commits = useTemplateRef('commits');
+
 const selectedBrushId = ref(0);
+const input = ref(JSON.stringify(HOLA_MUNDO));
 
 function handlePixelPainted() {
   updateOutput();
@@ -33,16 +37,7 @@ function updateOutput() {
   updateOutput2(data);
 }
 
-const DATA = [
-  [1, 2, 3, 4, 0, 1, 2, 3, 4],
-  [1, 2, 3, 4, 0, 1, 2, 3, 4],
-  [1, 2, 3, 4, 0, 1, 2, 3, 4],
-  [1, 2, 3, 4, 0, 1, 2, 3, 4],
-];
-const input = ref(JSON.stringify(DATA));
-const commits = useTemplateRef('commits');
 function loadData() {
-  console.log(JSON.parse(input.value));
   commits.value.loadData(JSON.parse(input.value));
 }
 </script>
@@ -91,34 +86,31 @@ function loadData() {
         <brush-palette v-model="selectedBrushId" />
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="card my-2">
-          <div class="card-header">
-            <span> Input </span>
-            <button type="button" class="btn btn-primary" @click="loadData()">Load</button>
-          </div>
-          <div class="card-body p-1">
-            <textarea class="form-control w-100" v-model="input"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
+    <div class="row mb-2">
       <div class="col">
         <commits-canva :brush-id="selectedBrushId" @painted="handlePixelPainted()" ref="commits" />
       </div>
     </div>
     <div class="row">
       <div class="col-12 col-md-8">
+        <div class="card mb-2">
+          <div class="card-header">
+            <button type="button" class="btn btn-primary" @click="loadData()">
+              Load Data from this Input
+            </button>
+          </div>
+          <div class="card-body p-1">
+            <textarea class="form-control w-100" v-model="input"></textarea>
+          </div>
+        </div>
         <div class="card">
-          <div class="card-header">Output 1</div>
+          <div class="card-header fw-semibold">Output 1</div>
           <div class="card-body p-1">
             <textarea id="output1" class="form-control w-100 textarea-output"></textarea>
           </div>
         </div>
         <div class="card mt-2">
-          <div class="card-header">Output 2</div>
+          <div class="card-header fw-semibold">Output 2</div>
           <div class="card-body p-1">
             <textarea id="output2" class="form-control w-100 textarea-output"></textarea>
           </div>
