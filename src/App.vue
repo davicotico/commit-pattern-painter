@@ -4,8 +4,6 @@ import { useDark } from '@vueuse/core';
 import BrushPalette from './components/BrushPalette.vue';
 import CommitsCanva from './components/CommitsCanva.vue';
 import { updateOutput1, updateOutput2 } from './utils/output';
-import IconMoon from './components/icons/IconMoon.vue';
-import IconSun from './components/icons/IconSun.vue';
 import { HOLA_MUNDO, ZERO } from './utils/constants';
 
 const isDark = useDark({
@@ -45,44 +43,38 @@ function erase() {
 }
 </script>
 <template>
-  <nav class="navbar navbar-expand-lg sticky-top border-bottom" :class="{ isDark: 'navbar-dark' }">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <strong>Commit Pattern Painter</strong>
-      </a>
-      <div class="ms-auto">
-        <div
-          class="btn-group btn-group-sm"
-          role="group"
-          aria-label="Basic radio toggle button group"
-        >
-          <input
-            v-model="isDark"
-            type="radio"
-            class="btn-check"
-            id="rdoDark"
-            :value="true"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-success d-flex align-items-center" for="rdoDark">
-            <icon-moon></icon-moon>
-          </label>
-
-          <input
-            v-model="isDark"
-            type="radio"
-            class="btn-check"
-            id="rdoLight"
-            :value="false"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-success d-flex align-items-center" for="rdoLight">
-            <icon-sun></icon-sun>
-          </label>
+  <main>
+    <div class="px-4 pt-2 mt-3 mb-1 text-center">
+      <h1 class="display-5 fw-bold text-body-emphasis">Commit Pattern Painter</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+          With this project you can learn <strong>A LOT about Vue.js Components</strong>
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a
+            href="https://github.com/davicotico/commit-pattern-painter"
+            target="_blank"
+            class="btn btn-success px-4 gap-3"
+          >
+            <i class="bi bi-github"></i> View on Github
+          </a>
+        </div>
+        <div class="col-1 mx-auto mt-5">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="chkTheme"
+              v-model="isDark"
+            />
+            <label class="form-check-label" for="flexSwitchCheckDefault">Dark</label>
+          </div>
         </div>
       </div>
     </div>
-  </nav>
+  </main>
+
   <div class="container mt-4">
     <div class="row my-2">
       <div class="col">
