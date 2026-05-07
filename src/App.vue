@@ -6,7 +6,7 @@ import CommitsCanva from './components/CommitsCanva.vue';
 import { updateOutput1, updateOutput2 } from './utils/output';
 import IconMoon from './components/icons/IconMoon.vue';
 import IconSun from './components/icons/IconSun.vue';
-import { HOLA_MUNDO } from './utils/constants';
+import { HOLA_MUNDO, ZERO } from './utils/constants';
 
 const isDark = useDark({
   selector: 'html',
@@ -39,6 +39,9 @@ function updateOutput() {
 
 function loadData() {
   commits.value.loadData(JSON.parse(input.value));
+}
+function erase() {
+  commits.value.loadData(ZERO);
 }
 </script>
 <template>
@@ -95,9 +98,10 @@ function loadData() {
       <div class="col-12 col-md-8">
         <div class="card mb-2">
           <div class="card-header">
-            <button type="button" class="btn btn-primary" @click="loadData()">
+            <button type="button" class="btn btn-primary me-2" @click="loadData()">
               Load Data from this Input
             </button>
+            <button type="button" class="btn btn-secondary" @click="erase()">Erase</button>
           </div>
           <div class="card-body p-1">
             <textarea class="form-control w-100" v-model="input"></textarea>
