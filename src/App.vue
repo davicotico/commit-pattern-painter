@@ -4,7 +4,8 @@ import { useDark } from '@vueuse/core';
 import BrushPalette from './components/BrushPalette.vue';
 import CommitsCanva from './components/CommitsCanva.vue';
 import { updateOutput1, updateOutput2 } from './utils/output';
-import { HOLA_MUNDO, ZERO } from './utils/constants';
+import { HOLA_MUNDO } from './utils/constants';
+import IconGithub from './components/icons/IconGithub.vue';
 
 const isDark = useDark({
   selector: 'html',
@@ -38,15 +39,23 @@ function updateOutput() {
 function loadData() {
   commits.value.loadData(JSON.parse(input.value));
 }
-function erase() {
-  commits.value.loadData(ZERO);
+function clear() {
+  let m = [];
+  for (let i = 0; i < 7; i++) {
+    let row = [];
+    for (let j = 0; j < 45; j++) {
+      row.push(0);
+    }
+    m.push(row);
+  }
+  commits.value.loadData(m);
 }
 </script>
 <template>
   <main>
     <div class="px-4 pt-2 mt-3 mb-1 text-center">
       <h1 class="display-5 fw-bold text-body-emphasis">Commit Pattern Painter</h1>
-      <div class="col-lg-6 mx-auto">
+      <div class="col-lg-8 mx-auto">
         <p class="lead mb-4">
           With this project you can learn <strong>A LOT about Vue.js Components</strong>
         </p>
@@ -54,9 +63,9 @@ function erase() {
           <a
             href="https://github.com/davicotico/commit-pattern-painter"
             target="_blank"
-            class="btn btn-success px-4 gap-3"
+            class="btn btn-success gap-3 d-flex align-items-center"
           >
-            <i class="bi bi-github"></i> View on Github
+            <icon-github /> View on Github
           </a>
         </div>
         <div class="col-1 mx-auto mt-5">
@@ -93,7 +102,7 @@ function erase() {
             <button type="button" class="btn btn-primary me-2" @click="loadData()">
               Load Data from this Input
             </button>
-            <button type="button" class="btn btn-secondary" @click="erase()">Erase</button>
+            <button type="button" class="btn btn-secondary" @click="clear()">Clear</button>
           </div>
           <div class="card-body p-1">
             <textarea class="form-control w-100" v-model="input"></textarea>
