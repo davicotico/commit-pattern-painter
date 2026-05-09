@@ -2,7 +2,7 @@
 import { ref, useTemplateRef } from 'vue';
 import { useDark } from '@vueuse/core';
 import BrushPalette from './components/BrushPalette.vue';
-import CommitsCanva from './components/CommitsCanva.vue';
+import CommitCanvas from './components//CommitCanvas.vue';
 import { updateOutput1, updateOutput2 } from './utils/output';
 import { HOLA_MUNDO } from './utils/constants';
 import IconGithub from './components/icons/IconGithub.vue';
@@ -21,7 +21,6 @@ const input = ref(JSON.stringify(HOLA_MUNDO));
 function handlePixelPainted() {
   updateOutput();
 }
-
 function updateOutput() {
   let data = [[], [], [], [], [], [], []];
   let columns = document.querySelectorAll('#square-canva > ul > li');
@@ -35,20 +34,11 @@ function updateOutput() {
   updateOutput1(data);
   updateOutput2(data);
 }
-
 function loadData() {
   commits.value.loadData(JSON.parse(input.value));
 }
 function clear() {
-  let m = [];
-  for (let i = 0; i < 7; i++) {
-    let row = [];
-    for (let j = 0; j < 45; j++) {
-      row.push(0);
-    }
-    m.push(row);
-  }
-  commits.value.loadData(m);
+  commits.value.clear();
 }
 </script>
 <template>
@@ -83,7 +73,6 @@ function clear() {
       </div>
     </div>
   </main>
-
   <div class="container mt-4">
     <div class="row my-2">
       <div class="col">
@@ -92,7 +81,7 @@ function clear() {
     </div>
     <div class="row mb-2">
       <div class="col">
-        <commits-canva :brush-id="selectedBrushId" @painted="handlePixelPainted()" ref="commits" />
+        <commit-canvas :brush-id="selectedBrushId" @painted="handlePixelPainted()" ref="commits" />
       </div>
     </div>
     <div class="row">

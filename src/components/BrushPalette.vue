@@ -10,8 +10,9 @@ const isDark = useDark({
   valueLight: 'light',
 });
 
-const palette = computed(() => (isDark.value ? greenDark : greenLight));
 const brushId = defineModel();
+
+const palette = computed(() => (isDark.value ? greenDark : greenLight));
 </script>
 <template>
   <label class="radio-container mx-1" v-for="item in palette" :key="item.id">

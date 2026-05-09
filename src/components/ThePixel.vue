@@ -1,6 +1,6 @@
 <script setup>
 import { inject, watch } from 'vue';
-import { onMounted, useTemplateRef } from 'vue';
+import { useTemplateRef } from 'vue';
 import { indexedColors } from '@/data/palettes';
 
 const isDark = inject('isDark');
@@ -22,17 +22,14 @@ watch(isDark, () => {
 function getColorId() {
   return parseInt(pixelRef.value.dataset.brush || '0');
 }
-
 function handleMouseDown() {
   paintPixel();
 }
-
 function handleMouseOver() {
   if (props.isMouseDown) {
     paintPixel();
   }
 }
-
 function paintPixel() {
   if (pixelRef.value && props.brush) {
     pixelRef.value.style.backgroundColor = props.brush.color;
@@ -40,7 +37,6 @@ function paintPixel() {
     emit('painted');
   }
 }
-onMounted(() => {});
 </script>
 <template>
   <li ref="pixelRef" class="pixel" @mousedown="handleMouseDown" @mouseover="handleMouseOver"></li>

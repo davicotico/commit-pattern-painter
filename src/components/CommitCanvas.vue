@@ -17,18 +17,14 @@ defineEmits(['painted']);
 const props = defineProps({
   brushId: Number,
 });
+defineExpose({ loadData, clear });
 
-defineExpose({ loadData });
-
+const pixelElements = {};
 const isMouseDown = ref(false);
 const brush = ref();
 
-watchEffect(() => {
-  brush.value = getBrush();
-});
-
 onMounted(() => {
-  brush.value = getBrush();
+  brush.value = getBrushById(props.brushId);
   document.addEventListener('mousedown', handleGlobalMouseDown);
   document.addEventListener('mouseup', handleGlobalMouseUp);
 });
@@ -38,29 +34,28 @@ onUnmounted(() => {
   document.removeEventListener('mouseup', handleGlobalMouseUp);
 });
 
-function getBrush() {
+watchEffect(() => {
+  brush.value = getBrushById(props.brushId);
+});
+
+function getBrushById(id) {
   const modo = isDark.value ? 'dark' : 'light';
   return {
-    id: props.brushId,
-    color: indexedColors[modo][props.brushId],
+    id,
+    color: indexedColors[modo][id],
   };
 }
-
 function handleGlobalMouseDown() {
   isMouseDown.value = true;
 }
-
 function handleGlobalMouseUp() {
   isMouseDown.value = false;
 }
-
-const pixelElements = {};
 function setPixelRef(key, component) {
   if (component && component.pixelRef) {
     pixelElements[key] = component.pixelRef.value || component.pixelRef;
   }
 }
-
 function loadData(data) {
   if (!data.length) {
     console.error('data is not an array');
@@ -77,12 +72,16 @@ function loadData(data) {
     }
   }
 }
-function getBrushById(id) {
-  const modo = isDark.value ? 'dark' : 'light';
-  return {
-    id,
-    color: indexedColors[modo][id],
-  };
+function clear() {
+  let m = [];
+  for (let i = 0; i < 7; i++) {
+    let row = [];
+    for (let j = 0; j < 45; j++) {
+      row.push(0);
+    }
+    m.push(row);
+  }
+  loadData(m);
 }
 </script>
 <template>
